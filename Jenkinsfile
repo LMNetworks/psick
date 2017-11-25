@@ -17,6 +17,7 @@ pipeline {
         stage('Chars') {
           steps {
             echo 'Chars'
+            sh 'bin/puppet_check_syntax_fast.sh chars'
           }
         }
       }
