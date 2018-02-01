@@ -109,30 +109,29 @@ Notes:
 
 ### Setup a puppet master on a remote host
 
-Similar to previous step you can setup a puppet master on remote host via fabric.
+You can use the included fabric support to setup a new puppet master on a remote host.  
+You need to have the control repo on a remote git server.
 
-First step: we have to populate `hieradata/nodes/[remotefqdn].yaml` in our local
-control repo with specific configuration. We can take another host (such as puppet.foss.psick.io.yaml)
-as example.
+First, you have to populate `hieradata/nodes/[remotefqdn].yaml` (remotefqdn is
+the fully qualified domain name of the remote host you are going to setup) in your local
+control repo with specific configuration. You can take another host (such as puppet.foss.psick.io.yaml)
+as a starting example.  
+Commit the new configuration and push on remote git server.
 
-Let's commit and push on git server
-
-```
-git add hieradata/nodes/[remotefqdn].yaml
-git commit hieradata/nodes/[remotefqdn].yaml -m "Add node [remotefqdn].yaml"
-git push
-```
-
-Now let's go to prepare remote host.  
-Fabric will copy and run for you the scripts for install the control repo and all dependencies.
+Use `fabric` to install puppet and its dependencies on the remote host:
 
     fab puppet.install --host puppet
     fab puppet.remote_setup:options=auto --host puppet
 
-Once you have pushed your control repo on a git server you can copy the code to the puppet server.
+Now use fabric to setup the control repo on the remote server:
 
     fab puppet.deploy_controlrepo:remote_repo=git://git.organization.tld/git/psick --host puppet
+
+Lastly, use fabric to apply puppet code to the remote server:
+
     fab puppet.apply --host puppet
+
+Now your remote server is now a fully working puppet server.
 
 ### Directory structure
 
