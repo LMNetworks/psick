@@ -107,12 +107,23 @@ Notes:
         bin/puppet_setup.sh auto
         bin/setup.sh auto
 
-### Start working with our new control repo
-(WIP)
-
 ### Setup a puppet master on a remote host
 
-Similar to previous step you can setup a puppet master on remote host via fabric.  
+Similar to previous step you can setup a puppet master on remote host via fabric.
+
+First step: we have to populate `hieradata/nodes/[remotefqdn].yaml` in our local
+control repo with specific configuration. We can take another host (such as puppet.foss.psick.io.yaml)
+as example.
+
+Let's commit and push on git server
+
+```
+git add hieradata/nodes/[remotefqdn].yaml
+git commit hieradata/nodes/[remotefqdn].yaml -m "Add node [remotefqdn].yaml"
+git push
+```
+
+Now let's go to prepare remote host.  
 Fabric will copy and run for you the scripts for install the control repo and all dependencies.
 
     fab puppet.install --host puppet
