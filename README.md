@@ -68,6 +68,7 @@ If you have chosen to copy the full PSICK contents in your control repo, you can
 
 This applies to all the scripts and paths referenced in the docs, just be aware that some of the scripts in ```bin/``` and other integrations might not work correctly in a not full PSICK setup.
 
+
 ### Setup of a Puppet environment
 
 This control-repo requires Puppet 4 or later, if it's not already installed, you can install it with this cross OS Puppet 4 install script (it uses the official Puppet repos):
@@ -107,10 +108,18 @@ Notes:
         bin/puppet_setup.sh auto
         bin/setup.sh auto
 
+
 ### Setup a puppet master on a remote host
 
+Now you are going to work with a remote host.
+
+You have to push the control repo to a remote git server reachable from your host and hosts.  
+The command `psick create` has initialized your local git repo, you have to push to git server.
+
+    git remote add origin git@git.organization.tld/git/controlrepo.git
+    git push --set-upstream origin production
+
 You can use the included fabric support to setup a new puppet master on a remote host.  
-You need to have the control repo on a remote git server.
 
 First, you have to populate `hieradata/nodes/[remotefqdn].yaml` (remotefqdn is
 the fully qualified domain name of the remote host you are going to setup) in your local
@@ -125,7 +134,7 @@ Use `fabric` to install puppet and its dependencies on the remote host:
 
 Now use fabric to setup the control repo on the remote server:
 
-    fab puppet.deploy_controlrepo:remote_repo=git://git.organization.tld/git/psick --host puppet
+    fab puppet.deploy_controlrepo:remote_repo=git://git.organization.tld/git/controlrepo.git --host puppet
 
 Lastly, use fabric to apply puppet code to the remote server:
 
