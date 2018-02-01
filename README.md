@@ -68,7 +68,6 @@ If you have chosen to copy the full PSICK contents in your control repo, you can
 
 This applies to all the scripts and paths referenced in the docs, just be aware that some of the scripts in ```bin/``` and other integrations might not work correctly in a not full PSICK setup.
 
-
 ### Setup of a Puppet environment
 
 This control-repo requires Puppet 4 or later, if it's not already installed, you can install it with this cross OS Puppet 4 install script (it uses the official Puppet repos):
@@ -108,6 +107,21 @@ Notes:
         bin/puppet_setup.sh auto
         bin/setup.sh auto
 
+### Start working with our new control repo
+(WIP)
+
+### Setup a puppet master on a remote host
+
+Similar to previous step you can setup a puppet master on remote host via fabric.  
+Fabric will copy and run for you the scripts for install the control repo and all dependencies.
+
+    fab puppet.install --host puppet
+    fab puppet.remote_setup:options=auto --host puppet
+
+Once you have pushed your control repo on a git server you can copy the code to the puppet server.
+
+    fab puppet.deploy_controlrepo:remote_repo=git://git.organization.tld/git/psick --host puppet
+    fab puppet.apply --host puppet
 
 ### Directory structure
 
@@ -200,4 +214,3 @@ Managing changes:
   - [Git tasks](docs/git.md) - An overview on how to use Git
 
   - [Change Process](docs/change_process.md) - A step by step guide on how to manage changes in Puppet code
-
