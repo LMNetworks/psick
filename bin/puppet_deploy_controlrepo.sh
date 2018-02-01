@@ -29,6 +29,6 @@ cat > /etc/puppetlabs/r10k/r10k.yaml << EOF
     remote: $control_repo
 EOF
 
-echo "Running r10k deploy environment -v"
-r10k deploy environment -v
+echo "Running r10k deploy environment -p -v"
+r10k deploy environment -p -v
 
